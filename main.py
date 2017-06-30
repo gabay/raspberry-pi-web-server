@@ -10,7 +10,9 @@ def index():
 
 
 def main():
-    app.run('127.0.0.1', 8000)
+    host = sys.argv[1] if len(sys.argv) > 1 else ''
+    port = sys.argv[2] if len(sys.argv) > 2 else 8000
+    app.run(host, port)
 
 
 if __name__ == '__main__':
