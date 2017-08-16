@@ -51,7 +51,7 @@ def chat_message(message):
 
 
 def main():
-    host = sys.argv[1] if len(sys.argv) > 1 else None
+    host = sys.argv[1] if len(sys.argv) > 1 else '0.0.0.0'
     port = sys.argv[2] if len(sys.argv) > 2 else 8000
     socketio.run(app, host, port)
 
