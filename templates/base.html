@@ -6,14 +6,17 @@
         {% block head %}{% endblock %}
     </header>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
             <img src="/static/pi_logo.png" width="30"/>
-            <ul class="navbar-nav">
-            {% for page_name, page_url in pages %}
-                <li class="nav-item"><a class="nav-link" href="{{page_url}}">{{page_name}}</a></li>
-            {% endfor %}
-            </ul>
+            <div class="container">
+                <ul class="navbar-nav">
+                {% for page_name, page_url in pages %}
+                    <li class="nav-item"><a class="nav-link" href="{{page_url}}">{{page_name}}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
         </nav>
+        <br/>
         <div class="container">
             {% block body %}{% endblock %}
         </div>

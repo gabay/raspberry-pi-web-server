@@ -1,16 +1,19 @@
 import os
 import sys
 import time
-import Queue
+
 from flask import Flask, render_template, request, abort
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
+#app.config['SECRET_KEY'] = 'qjr39d66n3a9_!g7#'
+socketio = SocketIO(app)
 
 PAGES = [
     ('Home', '/'),
     ('Brandy', '/brandy'),
+    ('Chat', '/chat'),
 ]
-messages = Queue.Queue()
 
 
 def render(page, **context):
@@ -32,24 +35,25 @@ def favicon():
     return open(r'static/pi_logo.png', 'rb').read()
 
 
-@app.route('/chat', methods=['GET', 'POST'])
+@app.route('/chat')
 def chat():
-    if request.method == 'GET':
-        data = messages.get()
-        print 'sending: "%s"' % data
-        return data
-    elif request.method == 'POST':
-        print 'request data: "%s"' % request.data
-        messages.put(request.data)
-        return ''
-    else:
-        abort(401)
+    return render('chat.html')
+
+
+@socketio.on('message', namespace='/chat/io')
+def chat_message(message):
+    """Sent by a client when the user entered a new message.
+    The message is sent to all people in the room."""
+    final_message = message['message']
+    if message['user']:
+        final_message = '%s: %s' % (message['user'], final_message)
+    emit('message', {'message': final_message}, broadcast=True)
 
 
 def main():
-    host = sys.argv[1] if len(sys.argv) > 1 else ''
+    host = sys.argv[1] if len(sys.argv) > 1 else None
     port = sys.argv[2] if len(sys.argv) > 2 else 8000
-    app.run(host, port, threaded=True)
+    socketio.run(app, host, port)
 
 
 if __name__ == '__main__':

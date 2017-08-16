@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Chat{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script src="/static/chat.js"></script>
+{% endblock %}
+
+{% block body %}
+    <textarea id="chat" cols="80" rows="15" readonly></textarea>
+    <br><br>
+    <input id="user" size="10" placeholder="Username">
+    <input id="text" size="70" placeholder="Message">
+    <br><br>
+{% endblock %}
