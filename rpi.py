@@ -13,6 +13,7 @@ PAGES = [
     ('Home', '/'),
     ('Brandy', '/brandy'),
     ('Chat', '/chat'),
+    ('TicTacToe', '/tictactoe'),
 ]
 
 
@@ -25,19 +26,24 @@ def index():
     return render('index.html')
 
 
-@app.route('/brandy')
-def brandy():
-    return render('brandy.html')
-
-
 @app.route('/favicon.ico')
 def favicon():
     return open(r'static/pi_logo.png', 'rb').read()
 
 
+@app.route('/brandy')
+def brandy():
+    return render('brandy.html')
+
+
 @app.route('/chat')
 def chat():
     return render('chat.html')
+
+
+@app.route('/tictactoe')
+def tictactoe():
+    return render('tictactoe.html')
 
 
 @socketio.on('message', namespace='/chat/io')

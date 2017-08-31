@@ -1,11 +1,11 @@
 <html>
-    <header>
+    <head>
         <title>{% block title %}???{% endblock %} - Pi Server</title>
         <link rel="icon" href="/static/pi_logo.png" />
         <link rel="stylesheet" href="static/css/bootstrap.css" />
         {% block head %}{% endblock %}
-    </header>
-    <body>
+    </head>
+    <body style="display: flex; flex-direction: column">
         <nav class="navbar navbar-expand navbar-dark bg-dark">
             <img src="/static/pi_logo.png" width="30"/>
             <div class="container">
@@ -17,7 +17,7 @@
             </div>
         </nav>
         <br/>
-        <div class="container">
+        <div class="container" id="content" style="flex: 1">
             {% block body %}{% endblock %}
         </div>
     </body>
