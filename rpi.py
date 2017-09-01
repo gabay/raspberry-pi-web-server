@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 
 from flask import Flask, render_template, request, abort
 from flask_socketio import SocketIO, emit
@@ -18,12 +17,16 @@ PAGES = [
 
 
 def render(page, **context):
-    return render_template(page, pages=PAGES, **context)
+    template_name = page + '.html'
+    if os.path.exists(os.path.join('templates', template_name)):
+        return render_template(template_name, title=page.capitalize(), pages=PAGES, **context)
+    else:
+        return abort(404)
 
 
 @app.route('/')
 def index():
-    return render('index.html')
+    return render('index')
 
 
 @app.route('/favicon.ico')
@@ -31,19 +34,9 @@ def favicon():
     return open(r'static/pi_logo.png', 'rb').read()
 
 
-@app.route('/brandy')
-def brandy():
-    return render('brandy.html')
-
-
-@app.route('/chat')
-def chat():
-    return render('chat.html')
-
-
-@app.route('/tictactoe')
-def tictactoe():
-    return render('tictactoe.html')
+@app.route('/<page>')
+def page(page):
+    return render(page)
 
 
 @socketio.on('message', namespace='/chat/io')
